@@ -19,7 +19,7 @@ const Main = () => {
             <Box>
                 <Sidebar openDrawer={openDrawer}/>
                 <Suspense fallback={<SuspenseLoader />}>
-                    <Outlet />
+                    <Outlet context={{ openDrawer}} />
                 </Suspense>
             </Box>
         </>
