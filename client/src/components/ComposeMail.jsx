@@ -64,6 +64,7 @@ const ComposeMail = ({ openDialog, setOpenDialog }) => {
 
   const [data, setData] = useState({});
   const sentEmailService = useApi(API_URLS.saveSentEmail);
+  const saveDraftService = useApi(API_URLS.saveDraftEmails);
 
   const config = {
     Host: process.env.REACT_APP_HOST,
@@ -74,6 +75,28 @@ const ComposeMail = ({ openDialog, setOpenDialog }) => {
 
   const closeComposeMail = (e) => {
     e.preventDefault();
+    // create a payload to pass to the api
+    const payload = {
+      to: data.to,
+      from: 'amit.verma.22080@gmail.com',
+      subject: data.subject,
+      date: new Date(),
+      body: data.body,
+      image: '',
+      name: 'Amit',
+      starred: false,
+      type: 'drafts'
+    }
+
+    saveDraftService.call(payload);
+
+    if (!saveDraftService.error) {
+      setOpenDialog(false);
+      setData({});
+    }
+    else {
+
+    }
     setOpenDialog(false);
   };
 

@@ -1,3 +1,4 @@
+const { request } = require('express');
 const Email = require('../model/email.js')
 
 const saveSentEmails = (req, res) => {
@@ -12,5 +13,20 @@ const saveSentEmails = (req, res) => {
     }
 }
 
+const getEmails = async (req, res) => {
+    try {
+        let emails;
+        if (req.params.type === 'sent') {
+            emails = await Email.find({ type: req.params.type })
+        }
 
-module.exports = {saveSentEmails}
+        return res.status(200).json(emails)
+    }
+    catch (error) {
+        res.status(500).json(error.message);
+    }
+}
+
+
+
+module.exports = {saveSentEmails, getEmails}

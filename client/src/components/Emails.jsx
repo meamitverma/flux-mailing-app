@@ -1,6 +1,9 @@
-import { useOutletContext } from "react-router-dom";
-import { Checkbox, Box, styled } from "@mui/material";
+import { useEffect } from "react";
+import { useOutletContext, useParams } from "react-router-dom";
+import { Checkbox, Box, styled, List, ListItem } from "@mui/material";
 import { DeleteOutline } from "@mui/icons-material";
+import { API_URLS } from "../services/api.urls";
+import useApi from '../hooks/useApi'
 
 const Options = styled(Box)`
   background-color: #2c2c2c;
@@ -13,8 +16,16 @@ const Options = styled(Box)`
 const Emails = () => {
   const { openDrawer } = useOutletContext();
 
+  const { type } = useParams();
+
+  const getEmailService = useApi(API_URLS.getEmailFromType)
+
+  useEffect(() => {
+    getEmailService.call({}, type)
+  }, [type])
+
   return (
-    <div style={openDrawer ? { marginLeft: 250, borderRadius: 60 } : { width: "100%" }}>
+    <Box style={openDrawer ? { marginLeft: 250, borderRadius: 60 } : { width: "100%" }}>
       <Options>
         <Checkbox
           size="small"
@@ -26,9 +37,19 @@ const Emails = () => {
           }}
         />
         <DeleteOutline style={{color: 'lightgray'}} />
+
+        {/* list of emails */}
+        <List>
+          {
+            // getEmailService.response
+          }
+        </List>
+
       </Options>
+
       <Box></Box>
-    </div>
+
+    </Box>
   );
 };
 
