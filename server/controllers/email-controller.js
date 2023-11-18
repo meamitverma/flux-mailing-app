@@ -16,7 +16,10 @@ const saveSentEmails = (req, res) => {
 const getEmails = async (req, res) => {
     try {
         let emails;
-        if (req.params.type === 'sent') {
+        if (false) {
+            
+        }
+        else {
             emails = await Email.find({ type: req.params.type })
         }
 
