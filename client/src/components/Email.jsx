@@ -38,7 +38,7 @@ const Indicator = styled(Typography)`
     margin-right: 6px;
 `
 
-const Email = ({ email }) => {
+const Email = ({ email, selectedEmails }) => {
   return (
     <Wrapper>
       <Checkbox
@@ -49,6 +49,7 @@ const Email = ({ email }) => {
             color: "darkgray",
           },
         }}
+        checked = {selectedEmails.includes(email._id)}
       />
       {/* <Star /> */}
       <StarBorder fontSize="small" style={{ marginRight: 10 }}/>

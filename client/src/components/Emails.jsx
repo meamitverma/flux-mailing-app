@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import { Checkbox, Box, styled, List, ListItem } from "@mui/material";
 import { DeleteOutline } from "@mui/icons-material";
@@ -15,6 +15,9 @@ const Options = styled(Box)`
 `;
 
 const Emails = () => {
+
+  const [selectedEmails, setSelectedEmails] = useState([])
+
   const { openDrawer } = useOutletContext();
 
   const { type } = useParams();
@@ -24,6 +27,16 @@ const Emails = () => {
   useEffect(() => {
     getEmailService.call({}, type);
   }, [type]);
+
+  const selectAllEmails = (e) => {
+    if (e.target.checked) {
+      const emails = getEmailService?.response?.map(email => email._id);
+      setSelectedEmails(emails);
+    } 
+    else {
+      setSelectedEmails([])
+    }
+  }
 
   return (
     <Box
@@ -40,13 +53,15 @@ const Emails = () => {
               color: "lightgray",
             },
           }}
+
+          onChange={(e) => selectAllEmails(e)}
         />
         <DeleteOutline style={{ color: "lightgray" }} />
       </Options>
       {/* list of emails */}
       <List>
         {getEmailService?.response?.map((email) => (
-          <Email key={email._id} email={email} />
+          <Email key={email._id} email={email} selectedEmails={selectedEmails} />
         ))}
       </List>
     </Box>
