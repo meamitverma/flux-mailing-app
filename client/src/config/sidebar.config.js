@@ -23,7 +23,7 @@ export const SIDEBAR_DATA = [
     },
     {
         name: 'bin',
-        title: 'bin',
+        title: 'Bin',
         icon: DeleteOutline
     },
     {

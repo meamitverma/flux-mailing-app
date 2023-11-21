@@ -15,28 +15,36 @@ const Options = styled(Box)`
 `;
 
 const Emails = () => {
-
-  const [selectedEmails, setSelectedEmails] = useState([])
+  const [selectedEmails, setSelectedEmails] = useState([]);
+  const [refreshScreen, setRefreshScreen] = useState(false)
 
   const { openDrawer } = useOutletContext();
 
   const { type } = useParams();
 
   const getEmailService = useApi(API_URLS.getEmailFromType);
+  const moveEmailToBinService = useApi(API_URLS.moveEmailsToBin);
 
   useEffect(() => {
     getEmailService.call({}, type);
-  }, [type]);
+  }, [type, refreshScreen]);
 
   const selectAllEmails = (e) => {
     if (e.target.checked) {
-      const emails = getEmailService?.response?.map(email => email._id);
+      const emails = getEmailService?.response?.map((email) => email._id);
       setSelectedEmails(emails);
-    } 
-    else {
-      setSelectedEmails([])
+    } else {
+      setSelectedEmails([]);
     }
-  }
+  };
+
+  const deleteSelectedEmails = (e) => {
+    if (type == "bin") {
+    } else {
+      moveEmailToBinService.call(selectedEmails);
+    }
+    setRefreshScreen(prevState => !prevState)
+  };
 
   return (
     <Box
@@ -53,15 +61,21 @@ const Emails = () => {
               color: "lightgray",
             },
           }}
-
           onChange={(e) => selectAllEmails(e)}
         />
-        <DeleteOutline style={{ color: "lightgray" }} />
+        <DeleteOutline
+          style={{ color: "lightgray", cursor: "pointer" }}
+          onClick={(e) => deleteSelectedEmails(e)}
+        />
       </Options>
       {/* list of emails */}
       <List>
         {getEmailService?.response?.map((email) => (
-          <Email key={email._id} email={email} selectedEmails={selectedEmails} />
+          <Email
+            key={email._id}
+            email={email}
+            selectedEmails={selectedEmails}
+          />
         ))}
       </List>
     </Box>

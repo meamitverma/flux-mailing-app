@@ -16,8 +16,8 @@ const saveSentEmails = (req, res) => {
 const getEmails = async (req, res) => {
     try {
         let emails;
-        if (false) {
-            
+        if (req.params.type == 'bin') {
+            emails = await Email.find({ bin: true })
         }
         else {
             emails = await Email.find({ type: req.params.type })
@@ -30,6 +30,16 @@ const getEmails = async (req, res) => {
     }
 }
 
+const moveEmailsToBin = async (req, res) => {
+    try {
+        await Email.updateMany({ _id: { $in: req.body }}, { $set: {bin: true, starred: false, type: ''} })
 
+        return res.status(200).json('emails deleted successfully')
+    }
+    catch (e) {
+        console.log(e)
+        response.status(500).json(e.message);
+    }
+}
 
-module.exports = {saveSentEmails, getEmails}
+module.exports = {saveSentEmails, getEmails, moveEmailsToBin}
