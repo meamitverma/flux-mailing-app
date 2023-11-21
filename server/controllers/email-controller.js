@@ -19,6 +19,9 @@ const getEmails = async (req, res) => {
         if (req.params.type == 'bin') {
             emails = await Email.find({ bin: true })
         }
+        else if (req.params.type == 'allmail') {
+            emails = await Email.find({ })
+        }
         else {
             emails = await Email.find({ type: req.params.type })
         }
