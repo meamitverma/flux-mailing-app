@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
-import { Checkbox, Box, styled, List, ListItem } from "@mui/material";
+import { Checkbox, Box, styled, List} from "@mui/material";
 import { DeleteOutline } from "@mui/icons-material";
 import { API_URLS } from "../services/api.urls";
 import useApi from "../hooks/useApi";
@@ -39,7 +39,7 @@ const Emails = () => {
   };
 
   const deleteSelectedEmails = (e) => {
-    if (type == "bin") {
+    if (type === "bin") {
     } else {
       moveEmailToBinService.call(selectedEmails);
     }

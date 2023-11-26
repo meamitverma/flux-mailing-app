@@ -1,6 +1,8 @@
 import { Box, Checkbox, Typography, styled } from "@mui/material";
-import { Star, StarBorder } from "@mui/icons-material";
+import { StarBorder } from "@mui/icons-material";
 import React from 'react'
+import { useNavigate } from "react-router-dom";
+import { routes } from "../routes/routes";
 
 const Wrapper = styled(Box)`
     background-color: #161616;
@@ -36,9 +38,12 @@ const Indicator = styled(Typography)`
     padding: 0 4px;
     border-radius: 4px;
     margin-right: 6px;
-`
+`;
 
 const Email = ({ email, selectedEmails }) => {
+
+  const navigate = useNavigate();
+
   return (
     <Wrapper>
       <Checkbox
@@ -53,7 +58,7 @@ const Email = ({ email, selectedEmails }) => {
       />
       {/* <Star /> */}
       <StarBorder fontSize="small" style={{ marginRight: 10 }}/>
-      <Box>
+      <Box onClick={() => navigate(routes.view.path, { state: {email: email} })}>
         <Typography style={{ width: 200, overflow: 'hidden' }}>{email.name}</Typography>
         <Indicator>Inbox</Indicator>
         <Typography>{email.subject} {email.body && '-'} {email.body} </Typography>
