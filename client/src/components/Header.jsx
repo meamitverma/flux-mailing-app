@@ -9,7 +9,8 @@ import {
   SettingsOutlined,
   Tune,
 } from "@mui/icons-material";
-import { gmailLogo } from "../constants/constant";
+// import  fluxmaillogo  from "../constants/constant";
+import fluxmaillogo from '../assets/logo.png'
 
 const StyledAppBar = styled(AppBar)({
   background: "#111111",
@@ -51,7 +52,7 @@ const Header = ({ toggleDrawer }) => {
           color="#e6e6e6"
           onClick={toggleDrawer}
         />
-        <img src={gmailLogo} alt="logo" style={{ marginLeft: 15 }} />
+        <img src={fluxmaillogo} alt="logo" style={{ marginLeft: 15, height: '3rem', borderRadius: 5 }} />
         <SearchWrapper>
           <Search color="action" />
           <InputBase placeholder="Search Mail" />
