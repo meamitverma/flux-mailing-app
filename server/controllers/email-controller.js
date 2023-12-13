@@ -41,8 +41,19 @@ const moveEmailsToBin = async (req, res) => {
     }
     catch (e) {
         console.log(e)
-        response.status(500).json(e.message);
+        res.status(500).json(e.message);
     }
 }
 
-module.exports = {saveSentEmails, getEmails, moveEmailsToBin}
+const toggleStarredEmails = async (req, res) => {
+    try {
+        await Email.updateOne({ _id: req.body.id }, { $set: { starred: req.body.value }})
+        return res.status(200).json("Email is starred");
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json(error.message);
+    }
+}
+
+module.exports = {saveSentEmails, getEmails, moveEmailsToBin, toggleStarredEmails}
